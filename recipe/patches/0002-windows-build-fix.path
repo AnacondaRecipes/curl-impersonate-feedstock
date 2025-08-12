@@ -1,0 +1,35 @@
+From 4eb6ef193ba23e2917cacbbdf0d6bea4a157bb3e Mon Sep 17 00:00:00 2001
+From: Patryk Kups <pkups@anaconda.com>
+Date: Mon, 11 Aug 2025 16:00:15 +0200
+Subject: [PATCH] patch
+
+---
+ win/build.bat | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/win/build.bat b/win/build.bat
+index 0a8190a..d47c03e 100644
+--- a/win/build.bat
++++ b/win/build.bat
+@@ -9,9 +9,9 @@ IF EXIST "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\
+ )
+ 
+ :: common dirs
+-set deps=%cd%\deps
+-set build=%cd%\build
+-set packages=%cd%\packages
++set deps=%SRC_DIR%\deps
++set build=%SRC_DIR%\build
++set packages=%PREFIX%
+ 
+ :: configuration
+ set configuration=Release
+@@ -101,4 +101,4 @@ cmake %cmake_common_args% -DBUILD_SHARED_LIBS=ON^
+ cmake --build "%build%\curl" --config %configuration% --target install
+ popd
+ 
+-copy .\win\bin\*.bat .\packages\bin /Y
++copy %SRC_DIR%\win\bin\*.bat .\packages\bin /Y
+-- 
+2.39.5 (Apple Git-154)
+

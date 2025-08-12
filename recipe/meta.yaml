@@ -1,0 +1,67 @@
+{% set name = "curl-impersonate" %}
+{% set version = "1.2.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://github.com/lexiforest/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
+  sha256: be2494020a26378ceb888c2198e3cc1b8dee1150e58e5f432aa3bb92659d8e17
+  patches:
+    - patches/0001-unix-makefile-fix.patch  # [unix]
+    - patches/0002-windows-build-fix.path  # [win]
+
+build:
+  number: 0
+  run_exports:
+    - {{ pin_subpackage("curl-impersonate", max_pin="x.x.x") }}
+  missing_dso_whitelist:
+    - "*/libcxx"
+requirements:
+  build:
+    # https://github.com/lexiforest/curl-impersonate/tree/v1.2.0/patches
+    - patch  # [not win]
+    - msys2-patch  # [win]
+    # https://github.com/lexiforest/curl-impersonate/blob/v1.2.0/win/build.bat#L22
+    - clang  # [win]
+    - lld  # [win]
+    - {{ compiler('c') }}  # [unix]
+    - {{ compiler('cxx') }}  # [unix]
+    - cmake
+    - ninja-base
+    - make  # [unix]
+    - libtool  # [unix]
+    - automake  # [unix]
+    - autoconf  # [unix]
+    - pkg-config  # [unix]
+    - unzip  # [unix]
+    - nasm  # [win]
+  host:
+    - zlib
+    - zstd
+    - ca-certificates
+
+test:
+  commands:
+    - test -f $PREFIX/lib/libcurl-impersonate.4.dylib  # [osx]
+    - test -f $PREFIX/lib/libcurl-impersonate.so.4  # [linux]
+    - test -f $PREFIX/lib/libcurl-impersonate.so.4.8.0  # [linux]
+    - test -f $PREFIX/lib/libcurl-impersonate.a  # [unix]
+    - test -f $PREFIX/lib/libcurl-impersonate{{ SHLIB_EXT }}  # [unix]
+
+    # - if not exist %PREFIX%\\Library\\lib\\libcurl_imp.lib exit 1  # [win]
+    # - if not exist %PREFIX%\\Library\\bin\\libcurl.dll exit 1  # [win]
+    # - if not exist %LIBRARY_INC%\\aws\\mqtt\\mqtt.h exit 1  # [win]
+    # - if not exist %PREFIX%\\Library\\bin\\aws-c-mqtt.dll exit 1  # [win]
+about:
+  home: https://github.com/lexiforest/curl-impersonate
+  summary: A special build of curl that can impersonate the four major browsers Chrome, Edge, Safari and Firefox.
+  description: |
+    A special build of curl that can impersonate the four major browsers Chrome, Edge, Safari and Firefox.
+    curl-impersonate is able to perform TLS and HTTP handshakes that are identical to that of a real browser.
+  license: MIT
+  license_family: MIT
+  license_file: LICENSE
+  dev_url: https://github.com/lexiforest/curl-impersonate
+  doc_url: https://github.com/lexiforest/curl-impersonate/blob/main/README.md

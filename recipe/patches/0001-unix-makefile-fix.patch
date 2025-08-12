@@ -1,0 +1,46 @@
+From c9bd789eb6d253708096f712b29b2f580eb88937 Mon Sep 17 00:00:00 2001
+From: Patryk Kups <pkups@anaconda.com>
+Date: Fri, 8 Aug 2025 14:11:09 +0200
+Subject: [PATCH] patch
+
+---
+ Makefile.in | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index 33419b8..885d45a 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -258,7 +258,8 @@ $(ngtcp2_static_libs): ngtcp2-$(NGTCP2_VERSION).tar.bz2 $(boringssl_static_libs)
+ 	}
+ 
+ 	./configure PKG_CONFIG_PATH=$(nghttp3_install_dir)/lib/pkgconfig \
+-		BORINGSSL_LIBS="-L$(boringssl_install_dir)/ssl -lssl -L$(boringssl_install_dir)/crypto -lcrypto -lpthread" \
++		LDFLAGS="-L$(boringssl_install_dir)/ssl -L$(boringssl_install_dir)/crypto $$LDFLAGS" \
++		BORINGSSL_LIBS="-lssl -lcrypto -lpthread" \
+ 		BORINGSSL_CFLAGS="-I$(boringssl_dir)/include" \
+ 		--with-boringssl \
+ 		$$config_flags
+@@ -348,16 +349,16 @@ $(CURL_VERSION)/.chrome: $(chrome_libs)	$(CURL_VERSION).tar.gz $(CURL_VERSION)/.
+ 	  if test -n "$(with_ca_path)"; then \
+ 		config_flags="$$config_flags --with-ca-path=$(with_ca_path)"; \
+ 	  fi; \
+-	  add_libs="-pthread -lc++"; \
++	  add_libs="-pthread -lstdc++"; \
+ 	}
+ 
+ 	echo "Configuring curl with: $$config_flags"
+ 
+-	LDFLAGS="-Wl,-rpath,$(ngtcp2_install_dir)/lib" \
++	LDFLAGS="-Wl,-rpath,$(ngtcp2_install_dir)/lib $$LDFLAGS" \
+ 			 ./configure \
+ 			 $$config_flags \
+ 			 LIBS="$$add_libs" \
+-			 PKG_CONFIG_PATH="$(ngtcp2_install_dir)/crypto/boringssl/"
++			 PKG_CONFIG_PATH="$(ngtcp2_install_dir)/lib/pkgconfig:$(nghttp3_install_dir)/lib/pkgconfig"
+ 
+ 	# Remove possible leftovers from a previous compilation
+ 	$(MAKE) clean MAKEFLAGS=
+-- 
+2.39.5 (Apple Git-154)
+
