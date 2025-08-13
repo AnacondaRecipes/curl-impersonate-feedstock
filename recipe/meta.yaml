@@ -38,10 +38,12 @@ requirements:
     - autoconf  # [unix]
     - pkg-config  # [unix]
     - unzip  # [unix]
-    - zlib {{ zlib }} # [unix]
-    - zstd {{ zstd }} # [unix]
+    - zlib {{ zlib }}  # [unix]
+    - zstd {{ zstd }}  # [unix]
   host:
-    - ca-certificates # [unix]
+    - ca-certificates  # [unix]
+    - zlib  # [unix]
+    - zstd  # [unix]
 
 test:
   commands:
