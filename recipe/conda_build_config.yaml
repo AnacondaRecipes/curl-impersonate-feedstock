@@ -1,0 +1,5 @@
+# https://github.com/lexiforest/curl-impersonate/blob/v1.2.0/win/build.bat#L5C52-L5C56
+c_compiler:
+  - vs2022                     # [win]
+cxx_compiler:
+  - vs2022                     # [win]
