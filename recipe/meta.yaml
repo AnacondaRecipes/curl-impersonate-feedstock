@@ -10,7 +10,7 @@ source:
   sha256: be2494020a26378ceb888c2198e3cc1b8dee1150e58e5f432aa3bb92659d8e17
   patches:
     - patches/0001-unix-makefile-fix.patch  # [unix]
-    # - patches/0002-windows-unvendor.path  # [win]
+    - patches/0002-windows-unvendor.path  # [win]
 
 build:
   number: 0
@@ -38,12 +38,11 @@ requirements:
     - autoconf  # [unix]
     - pkg-config  # [unix]
     - unzip  # [unix]
-    - zlib {{ zlib }}  # [unix]
-    - zstd {{ zstd }}  # [unix]
+    - zlib {{ zlib }}
+    - zstd {{ zstd }}
   host:
-    - ca-certificates  # [unix]
-    - zlib  # [unix]
-    - zstd  # [unix]
+    - zlib
+    - zstd
 
 test:
   commands:
