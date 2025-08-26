@@ -10,7 +10,7 @@ source:
   - sha256: be2494020a26378ceb888c2198e3cc1b8dee1150e58e5f432aa3bb92659d8e17
     patches:
      - patches/0001-unix-makefile-fix.patch  # [unix]
-     - patches/0002-windows-unvendor.path  # [win]
+     - patches/0002-windows-unvendor-zstd-zlib.patch  # [win]
   # https://github.com/lexiforest/curl-impersonate/blob/v1.2.0/.github/workflows/build-win.yaml#L20-L25
   - git_url: https://github.com/google/brotli              # [win]
     git_rev: ed738e842d2fbdf2d6459e39267a633c4a9b2f5d      # [win]
