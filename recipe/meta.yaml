@@ -35,11 +35,7 @@ build:
   number: 0
   run_exports:
     - {{ pin_subpackage("curl-impersonate", max_pin="x.x.x") }}
-  ignore_run_exports:
-    - ucrt
-    - vc14_runtime
-  missing_dso_whitelist:
-    - "*/libcxx"
+
 requirements:
   build:
     - {{ stdlib('c') }}
