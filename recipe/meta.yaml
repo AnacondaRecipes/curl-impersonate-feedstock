@@ -6,11 +6,30 @@ package:
   version: {{ version }}
 
 source:
-  url: https://github.com/lexiforest/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: be2494020a26378ceb888c2198e3cc1b8dee1150e58e5f432aa3bb92659d8e17
-  patches:
-    - patches/0001-unix-makefile-fix.patch  # [unix]
-    - patches/0002-windows-unvendor.path  # [win]
+  - url: https://github.com/lexiforest/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
+  - sha256: be2494020a26378ceb888c2198e3cc1b8dee1150e58e5f432aa3bb92659d8e17
+    patches:
+     - patches/0001-unix-makefile-fix.patch  # [unix]
+     - patches/0002-windows-unvendor.path  # [win]
+  # https://github.com/lexiforest/curl-impersonate/blob/v1.2.0/.github/workflows/build-win.yaml#L20-L25
+  - git_url: https://github.com/google/brotli              # [win]
+    git_rev: ed738e842d2fbdf2d6459e39267a633c4a9b2f5d      # [win]
+    folder: deps/brotli                                    # [win]
+  - git_url: https://boringssl.googlesource.com/boringssl  # [win]
+    git_rev: 673e61fc215b178a90c0e67858bbf162c8158993      # [win]
+    folder: deps/boringssl                                 # [win]
+  - git_url: https://github.com/curl/curl                  # [win]
+    git_rev: curl-8_15_0                                   # [win]
+    folder: deps/curl                                      # [win]
+  - git_url: https://github.com/nghttp2/nghttp2            # [win]
+    git_rev: 8f44147c385fb1ed93a6f39911eeb30279bfd2dd      # [win]
+    folder: deps/nghttp2                                   # [win]
+  - git_url: https://github.com/ngtcp2/nghttp3             # [win]
+    git_rev: v1.9.0                                        # [win]
+    folder: deps/nghttp3                                   # [win]
+  - git_url: https://github.com/ngtcp2/ngtcp2              # [win]
+    git_rev: v1.11.0                                       # [win]
+    folder: deps/ngtcp2                                    # [win]
 
 build:
   number: 0
@@ -53,6 +72,7 @@ test:
     - test -f $PREFIX/lib/libcurl-impersonate{{ SHLIB_EXT }}  # [unix]
     - if not exist %PREFIX%\\Library\\lib\\libcurl_imp.lib exit 1  # [win]
     - if not exist %PREFIX%\\Library\\bin\\libcurl.dll exit 1  # [win]
+    - if not exist %PREFIX%\\Library\\bin\\curl_chrome100.bat exit 1  # [win]
     - if not exist %PREFIX%\\Library\\include\\curl\\curl.h exit 1  # [win]
 
 about:
