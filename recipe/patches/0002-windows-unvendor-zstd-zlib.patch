@@ -1,18 +1,18 @@
-From 1d90ea88c3c8d2aed353ab0e8139106167c6dc7e Mon Sep 17 00:00:00 2001
+From 940d066336982831b952ada2f55a70340c115cbc Mon Sep 17 00:00:00 2001
 From: Patryk Kups <pkups@anaconda.com>
-Date: Wed, 13 Aug 2025 17:20:20 +0200
+Date: Tue, 26 Aug 2025 19:17:38 +0200
 Subject: [PATCH] patch
 
 ---
- win/build.bat  | 25 +++++++++++++------------
+ win/build.bat  | 14 --------------
  win/deps.patch | 15 +--------------
- 2 files changed, 14 insertions(+), 26 deletions(-)
+ 2 files changed, 1 insertion(+), 28 deletions(-)
 
 diff --git a/win/build.bat b/win/build.bat
-index 0a8190a..c62e639 100644
+index 0a8190a..72b347f 100644
 --- a/win/build.bat
 +++ b/win/build.bat
-@@ -21,19 +21,20 @@ set cmake_common_args=-GNinja -DCMAKE_BUILD_TYPE=%configuration%^
+@@ -21,20 +21,6 @@ set cmake_common_args=-GNinja -DCMAKE_BUILD_TYPE=%configuration%^
    -DCMAKE_POLICY_DEFAULT_CMP0091=NEW -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded^
    -DCMAKE_C_COMPILER=clang-cl.exe -DCMAKE_CXX_COMPILER=clang-cl.exe -DCMAKE_LINKER=link.exe
  
@@ -22,29 +22,17 @@ index 0a8190a..c62e639 100644
 -cmake --build "%build%\zlib" --config %configuration% --target install
 -move /y "%packages%\lib\zlibstatic.lib" "%packages%\lib\zlib.lib"
 -popd
-+@REM UNVENDOR
-+@REM :: Build & Install zlib
-+@REM pushd "%deps%\zlib"
-+@REM cmake %cmake_common_args% -S . -B "%build%\zlib"
-+@REM cmake --build "%build%\zlib" --config %configuration% --target install
-+@REM move /y "%packages%\lib\zlibstatic.lib" "%packages%\lib\zlib.lib"
-+@REM popd
- 
+-
 -:: Build & Install zstd
 -pushd "%deps%\zstd"
 -cmake %cmake_common_args% -DZSTD_BUILD_SHARED=OFF -S build\cmake -B "%build%\zstd"
 -cmake --build "%build%\zstd" --config %configuration% --target install
 -ren "%packages%\lib\zstd_static.lib" zstd.lib
 -popd
-+@REM :: Build & Install zstd
-+@REM pushd "%deps%\zstd"
-+@REM cmake %cmake_common_args% -DZSTD_BUILD_SHARED=OFF -S build\cmake -B "%build%\zstd"
-+@REM cmake --build "%build%\zstd" --config %configuration% --target install
-+@REM ren "%packages%\lib\zstd_static.lib" zstd.lib
-+@REM popd
- 
+-
  :: Build & Install brotli
  pushd "%deps%\brotli"
+ cmake %cmake_common_args% -DBUILD_SHARED_LIBS=OFF -S . -B "%build%\brotli"
 diff --git a/win/deps.patch b/win/deps.patch
 index 323ae77..f03477a 100644
 --- a/win/deps.patch
