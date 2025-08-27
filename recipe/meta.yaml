@@ -15,6 +15,7 @@ source:
   - git_url: https://github.com/google/brotli              # [win]
     git_rev: ed738e842d2fbdf2d6459e39267a633c4a9b2f5d      # [win]
     folder: deps/brotli                                    # [win]
+  # Note: boringssl and curl are patched in bld.bat
   - git_url: https://boringssl.googlesource.com/boringssl  # [win]
     git_rev: 673e61fc215b178a90c0e67858bbf162c8158993      # [win]
     folder: deps/boringssl                                 # [win]
