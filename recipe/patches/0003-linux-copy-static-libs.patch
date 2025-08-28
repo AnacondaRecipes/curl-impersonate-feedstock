@@ -1,0 +1,62 @@
+From 44ab6777e26c2384e30fa0cdfc1b49c84e3988ad Mon Sep 17 00:00:00 2001
+From: Patryk Kups <pkups@anaconda.com>
+Date: Thu, 28 Aug 2025 13:07:28 +0200
+Subject: [PATCH] patch
+
+---
+ Makefile.in | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile.in b/Makefile.in
+index 885d45a..ddd6b4d 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -159,7 +159,9 @@ $(brotli_static_libs): brotli-$(BROTLI_VERSION).tar.gz
+ 		..
+ 
+ 	@cmake@ --build . --config Release --target install --parallel $(SUBJOBS)
+-
++	cp installed/lib/libbrotlidec.a $(PREFIX)/lib
++	cp installed/lib/libbrotlienc.a $(PREFIX)/lib
++	cp installed/lib/libbrotlicommon.a $(PREFIX)/lib
+ 
+ boringssl-$(BORING_SSL_COMMIT).zip:
+ 	curl -L https://github.com/google/boringssl/archive/$(BORING_SSL_COMMIT).zip \
+@@ -211,7 +213,8 @@ $(boringssl_static_libs): boringssl-$(BORING_SSL_COMMIT).zip boringssl-$(BORING_
+ 	mkdir -p $(boringssl_dir)/lib
+ 	cp ssl/libssl.a $(boringssl_dir)/lib
+ 	cp crypto/libcrypto.a $(boringssl_dir)/lib
+-
++	cp ssl/libssl.a $(PREFIX)/lib
++	cp crypto/libcrypto.a $(PREFIX)/lib
+ 
+ nghttp2-$(NGHTTP2_VERSION).tar.bz2:
+ 	curl -L $(NGHTTP2_URL) -o nghttp2-$(NGHTTP2_VERSION).tar.bz2
+@@ -235,6 +238,7 @@ $(nghttp2_static_libs): nghttp2-$(NGHTTP2_VERSION).tar.bz2
+ 	./configure $$config_flags
+ 	$(MAKE) MAKEFLAGS=-j$(SUBJOBS)
+ 	$(MAKE) install MAKEFLAGS=
++	cp installed/lib/libnghttp2.a $(PREFIX)/lib
+ 
+ ngtcp2-$(NGTCP2_VERSION).tar.bz2:
+ 	curl -L $(NGTCP2_URL) -o ngtcp2-$(NGTCP2_VERSION).tar.bz2
+@@ -265,6 +269,8 @@ $(ngtcp2_static_libs): ngtcp2-$(NGTCP2_VERSION).tar.bz2 $(boringssl_static_libs)
+ 		$$config_flags
+ 	$(MAKE) MAKEFLAGS=-j$(SUBJOBS)
+ 	$(MAKE) install MAKEFLAGS=
++	cp installed/lib/libngtcp2.a $(PREFIX)/lib
++	cp installed/lib/libngtcp2_crypto_boringssl.a $(PREFIX)/lib
+ 
+ nghttp3-$(NGHTTP3_VERSION).tar.bz2:
+ 	curl -L $(NGHTTP3_URL) -o nghttp3-$(NGHTTP3_VERSION).tar.bz2
+@@ -288,6 +294,7 @@ $(nghttp3_static_libs): nghttp3-$(NGHTTP3_VERSION).tar.bz2
+ 	./configure $$config_flags
+ 	$(MAKE) MAKEFLAGS=-j$(SUBJOBS)
+ 	$(MAKE) install MAKEFLAGS=
++	cp installed/lib/libnghttp3.a $(PREFIX)/lib
+ 
+ $(CURL_VERSION).tar.gz:
+ 	curl -L "https://github.com/curl/curl/archive/$(CURL_VERSION).tar.gz" \
+-- 
+2.39.5 (Apple Git-154)
+
