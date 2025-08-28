@@ -64,7 +64,7 @@ requirements:
 
 test:
   commands:
-    # Check if the curl-impersonate comes with the same libs as in 'lib' package in upstream
+    # Check if the our curl-impersonate comes with the same libs/inc as in 'lib' package in upstream
     # https://github.com/lexiforest/curl-impersonate/releases/tag/v1.2.0
     - test -f $PREFIX/lib/libcurl-impersonate.4.dylib  # [osx]
     - test -f $PREFIX/lib/libcurl-impersonate.a  # [unix]
@@ -82,10 +82,33 @@ test:
     - test -f $PREFIX/lib/libnghttp3.a  # [linux]
     - test -f $PREFIX/lib/libz.a  # [linux]
     - test -f $PREFIX/lib/libzstd.a  # [linux]
-    - if not exist %PREFIX%\\Library\\lib\\libcurl_imp.lib exit 1  # [win]
-    - if not exist %PREFIX%\\Library\\bin\\libcurl.dll exit 1  # [win]
-    - if not exist %PREFIX%\\Library\\bin\\curl_chrome100.bat exit 1  # [win]
-    - if not exist %PREFIX%\\Library\\include\\curl\\curl.h exit 1  # [win]
+    - if not exist %LIBRARY_LIB%\zstd.lib exit 1  # [win]
+    - if not exist %LIBRARY_LIB%\zlib.lib exit 1  # [win]
+    - if not exist %LIBRARY_LIB%\ssl.lib exit 1  # [win]
+    - if not exist %LIBRARY_LIB%\ngtcp2_crypto_boringssl.lib exit 1  # [win]
+    - if not exist %LIBRARY_LIB%\ngtcp2.lib exit 1  # [win]
+    - if not exist %LIBRARY_LIB%\nghttp3.lib exit 1  # [win]
+    - if not exist %LIBRARY_LIB%\nghttp2.lib exit 1  # [win]
+    - if not exist %LIBRARY_LIB%\libcurl_imp.lib exit 1  # [win]
+    - if not exist %LIBRARY_LIB%\libcurl.lib exit 1  # [win]
+    - if not exist %LIBRARY_LIB%\crypto.lib exit 1  # [win]
+    - if not exist %LIBRARY_LIB%\brotlienc.lib exit 1  # [win]
+    - if not exist %LIBRARY_LIB%\brotlidec.lib exit 1  # [win]
+    - if not exist %LIBRARY_LIB%\brotlicommon.lib exit 1  # [win]
+    - if not exist %LIBRARY_BIN%\zstd.exe exit 1  # [win]
+    - if not exist %LIBRARY_BIN%\wcurl exit 1  # [win]
+    - if not exist %LIBRARY_BIN%\zlib.dll exit 1  # [win]
+    - if not exist %LIBRARY_BIN%\libcurl.dll exit 1  # [win]
+    - if not exist %LIBRARY_BIN%\curl.exe exit 1  # [win]
+    - if not exist %LIBRARY_BIN%\curl-config exit 1  # [win]
+    - if not exist %LIBRARY_BIN%\bssl.exe exit 1  # [win]
+    - if not exist %LIBRARY_BIN%\brotli.exe exit 1  # [win]
+    - if not exist %LIBRARY_INC%\openssl\ssl.h exit 1  # [win]
+    - if not exist %LIBRARY_INC%\ngtcp2\ngtcp2_crypto_boringssl.h exit 1  # [win]
+    - if not exist %LIBRARY_INC%\nghttp3\nghttp3.h exit 1  # [win]
+    - if not exist %LIBRARY_INC%\nghttp2\nghttp2.h exit 1  # [win]
+    - if not exist %LIBRARY_INC%\curl\curl.h exit 1  # [win]
+    - if not exist %LIBRARY_INC%\brotli\types.h exit 1  # [win]
 
 about:
   home: https://github.com/lexiforest/curl-impersonate
